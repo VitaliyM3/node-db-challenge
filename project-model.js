@@ -1,5 +1,5 @@
 const knex = require('knex');
-const config = require('../knexfile.js');
+const config = require('./knexfile.js');
 const db = knex(config.development);
 
 module.exports = {
@@ -28,6 +28,12 @@ function addProject(data) {
     return db('projects')
     .insert(data);
 }
+
+// function getTasks(id) {
+//     return db('projects')
+//     .where('projects.id', 'tasks.project_id')
+//     .join('tasks', { 'projects.id': 'tasks.project_id' });
+// }
 
 function getTasks(id) {
     return db('tasks')
