@@ -62,7 +62,7 @@ router.post('/resources', (req, res) => {
 //add project
 router.post('/projects', (req, res) => {
     const body = req.body;
-    if(body.resource_name) {
+    if(body.project_name) {
         Projects.addProject(body)
             .then(data => {
                 res.status(201).json(data);
@@ -76,8 +76,19 @@ router.post('/projects', (req, res) => {
 })
 
 //add task
-router.post('/', (req, res) => {
-
+router.post('/projects/tasks', (req, res) => {
+    const body = req.body;
+    if(body.project_id && body.description) {
+        Projects.addTask(body)
+            .then(task => {
+                res.status(201).json(task);
+            })
+            .catch(err => {
+                res.status(500).json({  message: 'Failed to add task'})
+            });
+    } else {
+        res.status(400).json({ error: 'you need to have a project id and description'})
+    }
 })
 
 module.exports = router;
